@@ -70,7 +70,7 @@ sl.sidebar.divider()
 # Texto no rodape da sidebar
 sl.sidebar.markdown(
     """
-    <div style='font-size: 0.8em; opacity: 0.6; text-align: right; padding-top: 200px;'>
+    <div style='font-size: 0.8em; opacity: 0.6; text-align: right; padding-top: 380px;'>
         Criado por <b>Lucas Eduardo</b>
     </div>
     """,
@@ -111,6 +111,9 @@ fig1 = px.scatter(
     labels = {'fare': 'Tarifa', 'distance': 'Distancia da Corrida'}
 )
 
+# Mostra as linhas tracegadas para o hover
+fig1.update_xaxes(showspikes=True)
+fig1.update_yaxes(showspikes=True)
 
 # Cria coluna hora para fig2
 dfFiltrado['hora'] = pd.to_datetime(dfFiltrado['pickup']).dt.hour
@@ -142,9 +145,16 @@ fig2 = px.line(
     height = 300
 )
 
+# Garante q o template de hover n tenha nada
+fig2.update_traces(
+    hovertemplate = None,
+)
+
 # Atualiza o layout para q no eixo x as horas sejam marcadas de uma por uma
+## define o tipo de hover para mostrar um hover unico para todas linhas em um x
 fig2.update_layout(
     xaxis = dict(dtick=1),
+    hovermode = 'x unified'
 )
 
 # Agrupa por bairro de origem e periodo do dia, guarda numa coluna qtd corridas e ordena por ela
@@ -218,4 +228,3 @@ dfFiltrado
 # Plota os graficos fig1 e fig3 nas colunas que foram separadas
 col1.plotly_chart(fig1, use_container_width=True)
 col2.plotly_chart(fig3, use_container_width=True)
-
