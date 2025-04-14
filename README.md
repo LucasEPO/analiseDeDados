@@ -6,11 +6,7 @@ Este projeto utiliza o Streamlit para analisar dados de dois datasets.
 
 ## ▶️ Como executar
 
-1. **Clone o repositório:**
-```bash
-git clone https://github.com/seu-usuario/seu-repo.git
-cd seu-repo
-```
+1. **Clone este repositório:**
 
 2. **Crie um ambiente virtual e ative**
 ```bash
