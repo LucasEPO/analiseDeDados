@@ -75,10 +75,15 @@ fig = px.pie(
 #Atualiza layout geral do gráfico
 ## title        = atualizando tamanho do titulo do gráfico
 ## legend       = atualizando tamanho da legenda do gráfico
+## legend_title = atualizando tamanho e texto do titulo da legenda do gráfico
 ## annotations  = Colocando anotação na posição desejada
 fig.update_layout(
     title=dict(font=dict(size=24)),
-    legend=dict(font=dict(size=24)),
+    legend=dict(font=dict(size=20)),
+    legend_title=dict(
+        text='Status da validade',
+        font=dict(size=20)  
+    ),
     annotations=[
         dict(
             text=f"<b>Valor Total:</b> R$ {total:,.2f}",
@@ -104,10 +109,43 @@ fig.update_traces(
     hoverlabel=dict(font_size=16),
 )
 
+# Filtra o df para mostra no gráfico apenas os produtos que tenham estoque
+dfEstoque = df[df['estoque'] > 0]
+
+#construção do grafico
+## attr
+## data_frame           = dados a serem exibidos
+## x                    = coluna no eixo x
+## y                    = coluna no eixo y
+## title                = titulo do grafico
+## color                = coluna pelo qual sera dividido as cores
+## color_discrete_map   = dicionario de cores
+## orientation          = direção do grafico
+fig2 = px.bar(
+    data_frame=dfEstoque.sort_values(by=['status validade', 'estoque', 'produto']),
+    x = 'estoque',
+    y = 'produto',
+    title = "Distribuição da Quantidade de Produtos em Estoque por Status de Validade",
+    color = 'status validade',
+    color_discrete_map = cores,
+    orientation = 'h',
+)
+
+#Atualiza layout geral do gráfico
+## title        = atualizando tamanho do titulo do gráfico
+## legend       = atualizando tamanho da legenda do gráfico
+## legend_title = atualizando tamanho e texto do titulo da legenda do gráfico
+fig2.update_layout(
+    title=dict(font=dict(size=20)),
+    legend=dict(font=dict(size=20)),
+    legend_title=dict(font=dict(size=20)),
+)
+
 #Plota o gráfico
 ## use_container_width = atributo necessário quando há mais de um gráfico na tela
 ##q garante o gráfico não ficar cortado ou mal posicionado
 sl.plotly_chart(fig, use_container_width=True)
+sl.plotly_chart(fig2, use_container_width=True)
 
 ### EXECUTAR STREAMLIT PARA VER O GRÁFICO
 ### streamlit run visualizacao_dados.py
