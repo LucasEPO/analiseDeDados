@@ -191,7 +191,7 @@ fig3 = px.bar(
 # Soma a coluna de passageiros quando estao numa mesma zona de origem
 dfPassageiros = dfFiltrado.groupby('pickup_zone')['passengers'].sum().reset_index()
 
-# fig2 = grafico de linha
+# fig4 = grafico de barras
 ## attr
 ## data_frame           = dados a serem exibidos
 ## x                    = coluna no eixo x
